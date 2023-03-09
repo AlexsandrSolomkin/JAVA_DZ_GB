@@ -53,6 +53,7 @@ public class DZ_5_1 {
         // Максимальный подмассив, РАБОТАЕТ
         ArrayList<Integer> result_array = mini_array_in_2_array(array_1, array_2);
 
+        System.out.printf("Длинна подмассива: %d", result_array.size());
         print_array(result_array, "num_res");
 
     }
