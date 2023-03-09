@@ -50,7 +50,7 @@ public class DZ_5_1 {
         // print_array(array_1, name_array_1);
         // print_array(array_2, name_array_2);
 
-        // Максимальный подмассив, НЕ РАБОТАЕТ
+        // Максимальный подмассив, РАБОТАЕТ
         ArrayList<Integer> result_array = mini_array_in_2_array(array_1, array_2);
 
         print_array(result_array, "num_res");
@@ -91,49 +91,43 @@ public class DZ_5_1 {
         return data_array;
     }
 
-    // Метод возвращающий максимальный подмассив встречающийся в 2 массивах, НЕ РАБОТАЕТ
+    // Метод возвращающий максимальный подмассив встречающийся в 2 массивах
     static ArrayList<Integer> mini_array_in_2_array(ArrayList<Integer> array_left, ArrayList<Integer> array_rigth) {
+        ArrayList<Integer> mini_array_max = new ArrayList<Integer>();
         ArrayList<Integer> mini_array = new ArrayList<Integer>();
-        int max_length = 0, i_start_max = 0, i_end_max = 0;
 
         for (int i = 0; i < array_left.size(); i++) {
-            int i_start = 0, i_end = 0;
             int k = i;
 
             for (int j = 0; ((k < array_left.size()) && (j < array_rigth.size())); j++) {
-                
-                if ((i_start == 0) && (array_left.get(k) == array_rigth.get(j))) {
-                    i_start = k;
-                    k++;
 
-                } else if ((i_start != 0) && (array_left.get(k) != array_rigth.get(j))) {
-                    i_end = k;
-                    break;
-
-                } else if (array_left.get(k) == array_rigth.get(j)){
-                    k++;
+                if (array_left.equals(array_rigth)) {
+                    mini_array_max.addAll(array_left);
+                    return mini_array_max;
                 }
-            }
-            
-            System.out.println(i_start);
-            System.out.println(i_end);
 
-            int diff = i_end - i_start;
+                if (array_left.get(k) == array_rigth.get(j)) {
+                    mini_array.add(array_left.get(k));
+                }
 
-            if (diff > max_length) {
-                i_start_max = i_start;
-                i_end_max = i_end;
-                max_length = diff;
+                if (array_left.get(k) != array_rigth.get(j)) {
+
+                    if (mini_array_max.size() < mini_array.size()){
+                        mini_array_max.clear();
+                        mini_array_max.addAll(mini_array);
+                        mini_array.clear();
+
+                    } else {
+                        mini_array.clear();
+                    }
+
+                    k = i;
+                }
+
+                k++;
             }
         }
 
-        System.out.println(i_start_max);
-        System.out.println(i_end_max);
-
-        for (int l = i_start_max; l <= i_end_max; l++) {
-            mini_array.add(array_left.get(l));
-        }
-
-        return mini_array;
+        return mini_array_max;
     }
 }
