@@ -12,8 +12,128 @@
 
 package DZ_JAVA.DZ_SEMINAR_5;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class DZ_5_1 {
     public static void main(String[] args) {
-        
+        Scanner scanner_data = new Scanner(System.in);
+        String name_array_1 = "num_1";
+        String name_array_2 = "num_2";
+
+        // Данные для теста
+        // =========================================================================================
+        ArrayList<Integer> array_1 = new ArrayList<>();
+        array_1.add(1);
+        array_1.add(2);
+        array_1.add(3);
+        array_1.add(2);
+        array_1.add(1);
+        // array_1.add(0); array_1.add(0); array_1.add(0); array_1.add(0);
+        // array_1.add(0);
+
+        ArrayList<Integer> array_2 = new ArrayList<>();
+        array_2.add(3);
+        array_2.add(2);
+        array_2.add(1);
+        array_2.add(4);
+        array_2.add(7);
+        // array_2.add(0); array_2.add(0); array_2.add(0); array_2.add(0);
+        // array_2.add(0);
+        // =========================================================================================
+
+        // Заполнение, РАБОТАЕТ
+        // ArrayList<Integer> array_1 = scanner_array_data(scanner_data, name_array_1);
+        // ArrayList<Integer> array_2 = scanner_array_data(scanner_data, name_array_2);
+
+        // Вывод, РАБОТАЕТ
+        // print_array(array_1, name_array_1);
+        // print_array(array_2, name_array_2);
+
+        // Максимальный подмассив, НЕ РАБОТАЕТ
+        ArrayList<Integer> result_array = mini_array_in_2_array(array_1, array_2);
+
+        print_array(result_array, "num_res");
+
+    }
+
+    // Метод вывода массива
+    static void print_array(ArrayList<Integer> array, String name_array) {
+        System.out.printf("\nМассив %s = ", name_array);
+        System.out.println(array);
+    }
+
+    // Метод занесения данных в массив
+    static ArrayList<Integer> scanner_array_data(Scanner scanner_value, String name_array) {
+        ArrayList<Integer> data_array = new ArrayList<Integer>();
+        boolean flag_input = true;
+        System.out.printf("\nВвод данных для массива %s\n", name_array);
+        System.out.println("==========================================");
+
+        while (flag_input == true) {
+            System.out.print("\nВвести данные?\n1 - Да\n2 - Нет\nОтвет: ");
+            int answer = scanner_value.nextInt();
+
+            if (answer == 1) {
+                System.out.print("Введите целое число: ");
+                int input_data = scanner_value.nextInt();
+                data_array.add(input_data);
+
+            } else if (answer == 2) {
+                flag_input = false;
+
+            } else {
+                System.out.println("Такое действие не предусмотренно.");
+            }
+        }
+        System.out.printf("\nВвод данных для массива %s прерван\n", name_array);
+        System.out.println("==========================================");
+        return data_array;
+    }
+
+    // Метод возвращающий максимальный подмассив встречающийся в 2 массивах, НЕ РАБОТАЕТ
+    static ArrayList<Integer> mini_array_in_2_array(ArrayList<Integer> array_left, ArrayList<Integer> array_rigth) {
+        ArrayList<Integer> mini_array = new ArrayList<Integer>();
+        int max_length = 0, i_start_max = 0, i_end_max = 0;
+
+        for (int i = 0; i < array_left.size(); i++) {
+            int i_start = 0, i_end = 0;
+            int k = i;
+
+            for (int j = 0; ((k < array_left.size()) && (j < array_rigth.size())); j++) {
+                
+                if ((i_start == 0) && (array_left.get(k) == array_rigth.get(j))) {
+                    i_start = k;
+                    k++;
+
+                } else if ((i_start != 0) && (array_left.get(k) != array_rigth.get(j))) {
+                    i_end = k;
+                    break;
+
+                } else if (array_left.get(k) == array_rigth.get(j)){
+                    k++;
+                }
+            }
+            
+            System.out.println(i_start);
+            System.out.println(i_end);
+
+            int diff = i_end - i_start;
+
+            if (diff > max_length) {
+                i_start_max = i_start;
+                i_end_max = i_end;
+                max_length = diff;
+            }
+        }
+
+        System.out.println(i_start_max);
+        System.out.println(i_end_max);
+
+        for (int l = i_start_max; l <= i_end_max; l++) {
+            mini_array.add(array_left.get(l));
+        }
+
+        return mini_array;
     }
 }
